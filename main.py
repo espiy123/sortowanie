@@ -19,7 +19,7 @@ def tworzenie_listy():
 #W przypadku gdy element listy faktycznie jest wiekszy od jego nastepcy nastepuje zamania tych wartosci miejscami a
 #zmienna sortowanie ponowanie ma przypisana wartosct true aby moc wykonac kolejny krok. W przeciwsnym razie
 # (gdy nie ma juz liczby, ktorej nastepca jest od niej mniejszy tzn. lista jest posortowana) warunek
-# if lista[i] > lista[i+1] sie nie wykona. W takim razie petla while zostaje przerwana (zmienna sortowanie ma wartosc false)
+# if lista[i] > lista[i+1] sie nie wykona. W takim wypadku petla while zostaje przerwana (zmienna sortowanie ma wartosc false)
 
 def sortowanie_babelkowe():
     lista = tworzenie_listy()
