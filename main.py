@@ -1,13 +1,14 @@
 from random import randrange
+import time
 
 #tworzenie listy z losowymi wartosciami
 
 lista = []
 i = 0
-while i<100:
+while i<1000:
     lista.append(randrange(0,100))
     i += 1
-print("Lista przed sortowaniem: ")
+print("Lista przed posortowaniem: ")
 print(str(lista)+"\n")
 
 
@@ -27,8 +28,9 @@ print(str(lista)+"\n")
 def sortowanie_babelkowe():
     print("-----SORTOWANIE-BABELKOWE-----")
     lista1 = lista.copy()
-
     iteracje = 0
+
+    timer_start = time.time()
     sortowanie = True
     while sortowanie:
         sortowanie = False
@@ -37,6 +39,8 @@ def sortowanie_babelkowe():
                 lista1[i], lista1[i+1] = lista1[i+1], lista1[i]
                 sortowanie = True
                 iteracje +=1
+    timer_stop = time.time()
+    print("Czas wykokania: "+str('%.2f' % ((timer_stop - timer_start)*1000))+" ms")
     print("Ilosc iteracji:"+str(iteracje))
     print("Lista po sortowaniu:")
     return str(lista1)+"\n"
@@ -47,15 +51,16 @@ def sortowanie_babelkowe():
 #Zaczynamy od drugiego elementu listy i równolegle z iteracjami zwiekszamy indeks elementu
 #Sprawdzamy czy element listy jest mniejszy od poprzednika
 #Jezeli taka sytuacja zajdzie liczby te zamianiane sa ze soba miejscami
-#Algorytm ten jest dosyc prosty a swoim dzialaniem przypomina sortowanie babelkowe
+#Algorytm ten jest dosyc prosty a dzialajac daje wrazenie odwrocnego bubble sort
 #
 #zlozonosc obliczeniowa: O(n^2)
 #
 def sortowanie_przez_wstawianie():
     print("-----SORTOWANIE-PRZEZ-WSTAWIANIE-----")
     lista1 = lista.copy()
-
     iteracje = 0
+
+    timer_start = time.time()
     for i in range(1,len(lista1)):
         for y in range(i, 0,-1):
             if lista1[y]<lista1[y-1]:
@@ -63,12 +68,15 @@ def sortowanie_przez_wstawianie():
                 iteracje += 1
             else:
                 break
+    timer_stop = time.time()
+    print("Czas wykokania: "+str('%.2f' % ((timer_stop - timer_start)*1000))+" ms")
     print("Ilosc iteracji:"+str(iteracje))
     print("Lista po sortowaniu:")
     return str(lista1)+"\n"
 
 
 
-print(sortowanie_babelkowe())
+print(sortowanie_babelkowe())     
 print(sortowanie_przez_wstawianie())
+
 
