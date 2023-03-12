@@ -6,7 +6,7 @@ import time
 lista = []
 i = 0
 while i<1000:
-    lista.append(randrange(0,100))
+    lista.append(randrange(-100,100))
     i += 1
 print("Lista przed posortowaniem: ")
 print(str(lista)+"\n")
@@ -24,7 +24,6 @@ print(str(lista)+"\n")
 #
 #zlozonosc obliczeniowa: O(n^2)
 #
-
 def sortowanie_babelkowe():
     print("-----SORTOWANIE-BABELKOWE-----")
     lista1 = lista.copy()
@@ -76,7 +75,65 @@ def sortowanie_przez_wstawianie():
 
 
 
+#Sortowanie przez scalanie / merge sort
+#Sortowanie przez scalanie jest metodą sortowania typu "dziel i zwyciężaj"
+#Na samym początku dzielimy naszą listę na części (możliwie po połowie) tak długo aż nie dojdziemy do pojedyńczych elementów
+#Następnie scalamy te elementy z powrotem jednak tym razem z zachowanie kolejności od najmniejszej do największej.
+#Merge sort dzieli tabclie rekurencyjnie co czyni go bardziej skomplikowanym niż tradycyjne algorytmy iteracyjne
+#Jest on za to o wiele szybszy, wymaga mniej porównań
+#
+#zlozonosc obliczeniowa: O(n log n)
+#
+def sortowanie_przez_scalanie():
+    print("-----SORTOWANIE-PRZEZ-SCALANIE-----")
+    def merge_sort(arr,iteracje):
+        if len(arr) > 1:
+            iteracje += 1 
+            lewa_lista = arr[:len(arr)//2]
+            prawa_lista = arr[len(arr)//2:]
+
+
+            merge_sort(lewa_lista,iteracje)
+            merge_sort(prawa_lista,iteracje)
+
+            lewy_indeks = 0
+            prawy_indeks = 0
+            index_scalania = 0
+            while lewy_indeks < len(lewa_lista) and prawy_indeks < len(prawa_lista):
+                iteracje += 1
+                if lewa_lista[lewy_indeks] < prawa_lista[prawy_indeks]:
+                    arr[index_scalania] = lewa_lista[lewy_indeks]
+                    lewy_indeks += 1
+                else:
+                    arr[index_scalania] = prawa_lista[prawy_indeks]
+                    prawy_indeks += 1
+                index_scalania +=1
+
+            while lewy_indeks < len(lewa_lista):
+                iteracje += 1
+                arr[index_scalania] = lewa_lista[lewy_indeks]
+                lewy_indeks += 1
+                index_scalania += 1
+
+            while prawy_indeks < len(prawa_lista):
+                iteracje += 1
+                arr[index_scalania] = prawa_lista[prawy_indeks]
+                prawy_indeks += 1
+                index_scalania += 1
+            return(arr,iteracje)
+    list = []
+    timer_start = time.time()
+    lista1 = lista.copy()
+    iteracje = 0
+    list = merge_sort(lista1, iteracje)
+    timer_stop = time.time()
+    print("Czas wykokania: "+str('%.2f' % ((timer_stop - timer_start)*1000))+" ms")
+    print("Ilosc iteracji / rekurencji: "+str(list[1]))
+    return(list[0])
+
+
 print(sortowanie_babelkowe())     
 print(sortowanie_przez_wstawianie())
+print(sortowanie_przez_scalanie())
 
 
