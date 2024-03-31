@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 iloscTestow = 5
-dlugosc = 200
+dlugosc = 2000
 dolnyKres = 0
 gornyKres = 2000
 iloscSkokow = 2
@@ -64,12 +64,30 @@ for x in range(dlugosc):
 ascendingTable = sorted(masterTable)
 descendingTable = ascendingTable[::-1]
 vTable = vTableFuncion(ascendingTable)
-cTable = list(range(100))
+cTable = []
+[cTable.append(1) for x in range(dlugosc)]
 
 print(cTable)
 
-testowatablica = test(masterTable)
+testowatablica = test(descendingTable)
 points = np.array(testowatablica)
+testowatablica = test(ascendingTable)
+points2 = np.array(testowatablica)
+testowatablica = test(masterTable)
+points3 = np.array(testowatablica)
+testowatablica = test(vTable)
+points4 = np.array(testowatablica)
+testowatablica = test(cTable)
+points5 = np.array(testowatablica)
+plt.plot(points, label='malejący')
+# plt.legend()
+plt.plot(points2, label='rosnący')
+# plt.legend()
+plt.plot(points3, label='losowa')
+# plt.legend()
+plt.plot(points4, label='v-kształtne')
+# plt.legend()
+plt.plot(points5, label='stała')
+plt.legend()
 
-plt.plot(points)
 plt.show()
