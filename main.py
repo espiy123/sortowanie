@@ -2,9 +2,10 @@ import random
 import time
 import numpy as np
 import matplotlib.pyplot as plt
+import math
 
 iloscTestow = 5
-dlugosc = 2000
+dlugosc = 200
 dolnyKres = 0
 gornyKres = 2000
 iloscSkokow = 2
@@ -22,7 +23,14 @@ def vTableFuncion(table):
     vShape = table1 + table2
 
     return vShape
-
+def insertionSort(array):
+    for step in range(1, len(array)):
+        key = array[step]
+        j = step - 1      
+        while j >= 0 and key < array[j]:
+            array[j + 1] = array[j]
+            j = j - 1
+        array[j + 1] = key
 
 def median(lst):
     n = len(lst)
@@ -45,7 +53,7 @@ def test(tabela):
 
                 # timeStart = time.perf_counter()
                 ###ALGORYTM###
-                tempTable.sort()
+                insertionSort(tempTable)
                 ##############
                 timeStop = time.perf_counter()
                 temp_list.append(timeStop - timeStart)
@@ -64,9 +72,7 @@ for x in range(dlugosc):
 ascendingTable = sorted(masterTable)
 descendingTable = ascendingTable[::-1]
 vTable = vTableFuncion(ascendingTable)
-cTable = []
-[cTable.append(1) for x in range(dlugosc)]
-
+cTable = [1 for _ in range(dlugosc)]
 print(cTable)
 
 testowatablica = test(descendingTable)
@@ -79,6 +85,8 @@ testowatablica = test(vTable)
 points4 = np.array(testowatablica)
 testowatablica = test(cTable)
 points5 = np.array(testowatablica)
+
+
 plt.plot(points, label='malejący')
 # plt.legend()
 plt.plot(points2, label='rosnący')
@@ -87,7 +95,11 @@ plt.plot(points3, label='losowa')
 # plt.legend()
 plt.plot(points4, label='v-kształtne')
 # plt.legend()
-plt.plot(points5, label='stała')
+plt.plot(points5, label='stała')    
+
+ 
+
+plt.xticks(np.arange(0, dlugosc, step=(dlugosc//15)))
 plt.legend()
 
 plt.show()
