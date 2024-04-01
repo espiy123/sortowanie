@@ -2,12 +2,11 @@ import random
 import time
 import numpy as np
 import matplotlib.pyplot as plt
-import math
 
-iloscTestow = 5
-dlugosc = 200
+iloscTestow = 10
+dlugosc = 50
 dolnyKres = 0
-gornyKres = 2000
+gornyKres = 200
 iloscSkokow = 2
 
 def vTableFuncion(table):
@@ -19,7 +18,6 @@ def vTableFuncion(table):
         else:
             table2.append(table[i])
     table1 = table1[::-1]
-
     vShape = table1 + table2
 
     return vShape
@@ -32,38 +30,33 @@ def insertionSort(array):
             j = j - 1
         array[j + 1] = key
 
-def median(lst):
-    n = len(lst)
-    s = sorted(lst)
-    return (s[n // 2 - 1] / 2.0 + s[n // 2] / 2.0, s[n // 2])[n % 2] if n else None
+# def median(lst):
+#     n = len(lst)
+#     s = sorted(lst)
+#     return (s[n // 2 - 1] / 2.0 + s[n // 2] / 2.0, s[n // 2])[n % 2] if n else None
 
-
+def vTest(tabela):
+    czasy = []
+    for i in range(1, dlugosc):
+        listaTestowa = tabela.copy()
+        listaTestowa = vTableFuncion(listaTestowa[0:i])
+        time1 = time.perf_counter()
+        for _ in range(iloscTestow):
+            insertionSort(listaTestowa[0:i])
+        time2 = time.perf_counter()
+        czasy.append((time2 - time1) / iloscTestow)
+    return czasy
 def test(tabela):
-    czasyWykoania = []
-    sumaDlaKroku = []
-    for j in range(0, iloscTestow):
-        timeStart = time.perf_counter()
-        for i in range(dlugosc):
-            temp = 0
-            temp_list = []
-            for n in range(iloscTestow):
-                tempTable = []
-                for x in range(i):
-                    tempTable.append(tabela[x])
+    czasy = []
+    for i in range(1, dlugosc):
+        listaTestowa = tabela.copy()
+        time1 = time.perf_counter()
+        for _ in range(iloscTestow):
+            insertionSort(listaTestowa[0:i])
+        time2 = time.perf_counter()
+        czasy.append((time2-time1)/iloscTestow)
+    return czasy
 
-                # timeStart = time.perf_counter()
-                ###ALGORYTM###
-                insertionSort(tempTable)
-                ##############
-                timeStop = time.perf_counter()
-                temp_list.append(timeStop - timeStart)
-            if j == 0:
-                sumaDlaKroku.append(timeStop - timeStart)
-                czasyWykoania.append(sumaDlaKroku[i] / (j + 1))
-            else:
-                sumaDlaKroku[i] += (timeStop - timeStart)
-                czasyWykoania[i] = sumaDlaKroku[i] / (j + 1)
-    return czasyWykoania
 
 masterTable = []
 for x in range(dlugosc):
@@ -71,35 +64,22 @@ for x in range(dlugosc):
 
 ascendingTable = sorted(masterTable)
 descendingTable = ascendingTable[::-1]
-vTable = vTableFuncion(ascendingTable)
 cTable = [1 for _ in range(dlugosc)]
-print(cTable)
 
-testowatablica = test(descendingTable)
-points = np.array(testowatablica)
-testowatablica = test(ascendingTable)
-points2 = np.array(testowatablica)
-testowatablica = test(masterTable)
-points3 = np.array(testowatablica)
-testowatablica = test(vTable)
-points4 = np.array(testowatablica)
-testowatablica = test(cTable)
-points5 = np.array(testowatablica)
+malejaca = np.array(test(descendingTable))
+rosnaca = np.array(test(ascendingTable))
+losowa = np.array(test(masterTable))
+vLista = np.array(vTest(ascendingTable))
+cLista = np.array(test(cTable))
 
 
-plt.plot(points, label='malejący')
-# plt.legend()
-plt.plot(points2, label='rosnący')
-# plt.legend()
-plt.plot(points3, label='losowa')
-# plt.legend()
-plt.plot(points4, label='v-kształtne')
-# plt.legend()
-plt.plot(points5, label='stała')    
-
- 
+plt.plot(malejaca, label='malejący')
+plt.plot(rosnaca, label='rosnący')
+plt.plot(losowa, label='losowa')
+plt.plot(vLista, label='v-kształtne')
+plt.plot(cLista, label='stała')
 
 plt.xticks(np.arange(0, dlugosc, step=(dlugosc//15)))
 plt.legend()
 
-plt.show()
+plt.savefig('test.png')
