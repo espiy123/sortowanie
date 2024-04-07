@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 iloscTestow = 10
-dlugosc = 50
+dlugosc = 500
 dolnyKres = 0
 gornyKres = 200
 iloscSkokow = 2
@@ -82,4 +82,5 @@ plt.plot(cLista, label='stała')
 plt.xticks(np.arange(0, dlugosc, step=(dlugosc//15)))
 plt.legend()
 
+plt.show()
 plt.savefig('test.png')
